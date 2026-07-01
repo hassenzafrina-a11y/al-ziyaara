@@ -229,35 +229,51 @@
     #destinations { background: var(--cream); }
     .dest-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 28px;
     }
     .dest-card {
       background: #fff;
-      border-radius: 10px;
+      border-radius: 14px;
       overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
-      transition: transform 0.25s, box-shadow 0.25s;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+      transition: transform 0.3s, box-shadow 0.3s;
     }
-    .dest-card:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(0,0,0,0.12); }
-    .card-header {
-      padding: 28px 28px 20px;
-      background: linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%);
+    .dest-card:hover { transform: translateY(-8px); box-shadow: 0 20px 48px rgba(0,0,0,0.15); }
+    .card-img-wrap {
+      position: relative;
+      height: 210px;
+      overflow: hidden;
+      background: var(--dark);
     }
-    .card-icon { font-size: 2rem; margin-bottom: 10px; }
-    .card-header h3 { color: var(--gold); font-size: 1.2rem; }
-    .card-header .card-tagline { color: #aaa; font-family: 'Arial', sans-serif; font-size: 0.8rem; margin-top: 4px; }
-    .card-body { padding: 24px 28px 28px; }
-    .card-body p { font-size: 0.92rem; color: var(--text-light); }
+    .card-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .dest-card:hover .card-img-wrap img { transform: scale(1.07); }
+    .card-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(5,16,36,0.85) 0%, rgba(5,16,36,0.1) 60%, transparent 100%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 20px 22px;
+    }
+    .card-img-overlay h3 { color: #fff; font-size: 1.25rem; margin-bottom: 2px; text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
+    .card-img-overlay .card-tagline { color: var(--gold); font-family: 'Arial', sans-serif; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; }
+    .card-body { padding: 22px 24px 26px; }
+    .card-body p { font-size: 0.91rem; color: var(--text-light); line-height: 1.7; }
     .card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
     .tag {
       background: var(--cream);
       border: 1px solid #ddd;
-      color: var(--teal);
+      color: var(--dark);
       font-family: 'Arial', sans-serif;
-      font-size: 0.72rem;
-      padding: 3px 10px;
+      font-size: 0.7rem;
+      font-weight: bold;
+      padding: 4px 11px;
       border-radius: 12px;
+      letter-spacing: 0.3px;
     }
 
     /* ── BEACHES ── */
@@ -510,10 +526,12 @@
     <div class="dest-grid">
 
       <div class="dest-card">
-        <div class="card-header">
-          <div class="card-icon">🏙️</div>
-          <h3>Colombo</h3>
-          <p class="card-tagline">The Commercial Capital</p>
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1590123569799-0c1ef0b6b8e8?auto=format&fit=crop&w=800&q=80" alt="Colombo" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#0d2040,#081830)'"/>
+          <div class="card-img-overlay">
+            <h3>Colombo</h3>
+            <p class="card-tagline">The Commercial Capital</p>
+          </div>
         </div>
         <div class="card-body">
           <p>Colombo is Sri Lanka's largest city and financial hub. Explore the National Museum, Natural History Museum, Dutch Period Museum, Sapumal Foundation, Lionel Wendt Art Center, and the famous Colombo Zoological Gardens.</p>
@@ -527,10 +545,12 @@
       </div>
 
       <div class="dest-card">
-        <div class="card-header">
-          <div class="card-icon">🏰</div>
-          <h3>Galle</h3>
-          <p class="card-tagline">The Southwestern Port City</p>
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1586010421007-9e64b4c4073d?auto=format&fit=crop&w=800&q=80" alt="Galle Fort" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#0d2040,#081830)'"/>
+          <div class="card-img-overlay">
+            <h3>Galle</h3>
+            <p class="card-tagline">The Southwestern Port City</p>
+          </div>
         </div>
         <div class="card-body">
           <p>Galle Fort is a UNESCO World Heritage Site and a must-visit. The National Maritime Museum houses undersea artifacts. Enjoy diving at Unawatuna Bay and explore boutique shopping around the historic fort walls.</p>
@@ -544,10 +564,12 @@
       </div>
 
       <div class="dest-card">
-        <div class="card-header">
-          <div class="card-icon">⛰️</div>
-          <h3>Kandy</h3>
-          <p class="card-tagline">The Hill Capital</p>
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1563212035-8c6babb5b04c?auto=format&fit=crop&w=800&q=80" alt="Kandy" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#0d2040,#081830)'"/>
+          <div class="card-img-overlay">
+            <h3>Kandy</h3>
+            <p class="card-tagline">The Hill Capital</p>
+          </div>
         </div>
         <div class="card-body">
           <p>The royal city of Kandy sits 488m above sea level. Visit the Royal Palace, Royal Botanical Gardens at Peradeniya (home to 300+ orchid types), the Kandy Lake (built 1807), Hanthana Mountains, and the Knuckle Mountains.</p>
@@ -561,10 +583,12 @@
       </div>
 
       <div class="dest-card">
-        <div class="card-header">
-          <div class="card-icon">🏛️</div>
-          <h3>Anuradhapura</h3>
-          <p class="card-tagline">Ancient Capital · Est. 900 BC</p>
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=800&q=80" alt="Anuradhapura" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#0d2040,#081830)'"/>
+          <div class="card-img-overlay">
+            <h3>Anuradhapura</h3>
+            <p class="card-tagline">Ancient Capital · Est. 900 BC</p>
+          </div>
         </div>
         <div class="card-body">
           <p>One of Sri Lanka's oldest cities, Anuradhapura served as the ancient capital. Explore the Citadel, palaces, old city walls, Archaeology Museum, Folk Museum, and the legendary Lovamahapaya (Brazen Palace).</p>
@@ -578,10 +602,12 @@
       </div>
 
       <div class="dest-card">
-        <div class="card-header">
-          <div class="card-icon">🗿</div>
-          <h3>Polonnaruwa</h3>
-          <p class="card-tagline">World Heritage Site</p>
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?auto=format&fit=crop&w=800&q=80" alt="Polonnaruwa" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#0d2040,#081830)'"/>
+          <div class="card-img-overlay">
+            <h3>Polonnaruwa</h3>
+            <p class="card-tagline">World Heritage Site</p>
+          </div>
         </div>
         <div class="card-body">
           <p>A historic city that once served as Sri Lanka's capital. The entire site of Polonnaruwa is a World Heritage Site. See the ruins of the old city, the Royal Citadel, and soak in centuries of Sri Lankan history.</p>
@@ -594,10 +620,12 @@
       </div>
 
       <div class="dest-card">
-        <div class="card-header">
-          <div class="card-icon">🐘</div>
-          <h3>National Parks</h3>
-          <p class="card-tagline">Wildlife & Nature</p>
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=80" alt="National Parks Sri Lanka" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#0d2040,#081830)'"/>
+          <div class="card-img-overlay">
+            <h3>National Parks</h3>
+            <p class="card-tagline">Wildlife & Nature</p>
+          </div>
         </div>
         <div class="card-body">
           <p>Sri Lanka boasts remarkable wildlife sanctuaries including Yala National Park, Kitulgala, Bundala National Park, and the breathtaking Sinharaja Rainforest. Also visit the iconic Adam's Peak pilgrimage site.</p>
