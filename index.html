@@ -810,12 +810,13 @@
             <label>Message</label>
             <textarea id="message" placeholder="Tell us about your travel plans..." required></textarea>
           </div>
-          <button type="submit" class="btn btn-gold" style="width:100%; border:none; font-size:0.85rem;">Send Enquiry</button>
+          <div id="formError" style="display:none; background:rgba(220,50,50,0.15); border:1px solid #e05555; border-radius:6px; padding:12px 16px; margin-bottom:16px; color:#ff8080; font-family:Arial,sans-serif; font-size:0.85rem;"></div>
+        <button type="submit" id="submitBtn" class="btn btn-gold" style="width:100%; border:none; font-size:0.85rem;">Send Enquiry</button>
         </form>
-        <div id="formSuccess" style="display:none; text-align:center; padding:24px 0;">
-          <div style="font-size:2rem; margin-bottom:10px;">✅</div>
-          <p style="color:#d4b800; font-size:1rem; font-weight:bold;">Enquiry sent!</p>
-          <p style="color:#ccc; font-size:0.9rem; margin-top:6px;">We'll get back to you shortly.</p>
+        <div id="formSuccess" style="display:none; text-align:center; padding:32px 0;">
+          <div style="font-size:2.5rem; margin-bottom:12px;">✅</div>
+          <p style="color:#d4b800; font-size:1.1rem; font-weight:bold;">Enquiry sent!</p>
+          <p style="color:#ccc; font-size:0.9rem; margin-top:8px;">Thank you — we'll be in touch shortly.</p>
         </div>
       </div>
     </div>
@@ -841,26 +842,63 @@
     });
   });
 
-  function sendEnquiry(e) {
+  async function sendEnquiry(e) {
     e.preventDefault();
+
     const first   = document.getElementById('firstName').value.trim();
     const last    = document.getElementById('lastName').value.trim();
     const email   = document.getElementById('emailAddr').value.trim();
     const service = document.getElementById('service').value;
     const msg     = document.getElementById('message').value.trim();
+    const errorBox = document.getElementById('formError');
+    const btn      = document.getElementById('submitBtn');
 
-    const subject = encodeURIComponent('Tour Enquiry – ' + (service || 'General'));
-    const body    = encodeURIComponent(
-      'Name: ' + first + ' ' + last + '\n' +
-      'Email: ' + email + '\n' +
-      'Service: ' + (service || 'Not specified') + '\n\n' +
-      msg
-    );
+    // --- Validation ---
+    const errors = [];
+    if (!first)                              errors.push('First name is required.');
+    if (!last)                               errors.push('Last name is required.');
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push('A valid email address is required.');
+    if (!service)                            errors.push('Please select a service.');
+    if (!msg)                                errors.push('Please enter a message.');
 
-    window.location.href = 'mailto:al-ziyaara@sltnet.lk?subject=' + subject + '&body=' + body;
+    if (errors.length) {
+      errorBox.innerHTML = errors.join('<br>');
+      errorBox.style.display = 'block';
+      return;
+    }
+    errorBox.style.display = 'none';
 
-    document.getElementById('enquiryForm').style.display = 'none';
-    document.getElementById('formSuccess').style.display = 'block';
+    // --- Send via Web3Forms ---
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          access_key: '13644f4a-2658-455f-b52e-d4ba5b1bac0b',
+          subject: 'Tour Enquiry – ' + (service || 'General'),
+          from_name: first + ' ' + last,
+          email: email,
+          service: service || 'Not specified',
+          message: msg
+        })
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        document.getElementById('enquiryForm').style.display = 'none';
+        document.getElementById('formSuccess').style.display = 'block';
+      } else {
+        throw new Error(data.message || 'Submission failed.');
+      }
+    } catch (err) {
+      errorBox.textContent = 'Something went wrong — please try again or email us directly at al-ziyaara@sltnet.lk';
+      errorBox.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Send Enquiry';
+    }
   }
 </script>
 </body>
