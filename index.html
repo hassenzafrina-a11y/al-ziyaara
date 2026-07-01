@@ -915,6 +915,13 @@
       if (data.success) {
         document.getElementById('enquiryForm').style.display = 'none';
         document.getElementById('formSuccess').style.display = 'block';
+        setTimeout(function() {
+          document.getElementById('formSuccess').style.display = 'none';
+          document.getElementById('enquiryForm').style.display = 'block';
+          document.getElementById('enquiryForm').reset();
+          btn.disabled = false;
+          btn.textContent = 'Send Enquiry';
+        }, 4000);
       } else {
         throw new Error(data.message || 'Submission failed.');
       }
